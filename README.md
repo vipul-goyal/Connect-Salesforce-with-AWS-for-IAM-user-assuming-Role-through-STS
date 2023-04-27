@@ -1,0 +1,1 @@
+# Connect-Salesforce-with-AWS-for-IAM-user-assuming-Role-through-STS
