@@ -8,6 +8,8 @@ Steps to make callout :
 
 1)Create an object Amazon_Callout class i.e. Amazon_Callout amz=new Amazon_Callout(resource,region,service,contentType,body);
     Here body is the content of the request body.
+
+    
 2)Call the request function i.e. amz.sendRequest(objectId)
     This method will return a response object, in case we are unable to obtain atoken from aws ,we will get a new HttpResponse object without any data.
 
