@@ -13,6 +13,7 @@ public class Amazon_Callout {
     public String caseId;
     public String sessionKey;
     public String body;
+    public Boolean hasError=false;
     
     Blob signingKey;
     String signature;
@@ -38,6 +39,11 @@ public class Amazon_Callout {
         queryParams = new Map<String, String>();
         headerParams = new Map<String, String>();
         responseMap=Amazon_STS.getToken();
+        if(responseMap.containsKey('error'))
+        {
+            hasError=true;
+            //Logic to log error
+        }
         this.resource=resource;
         this.region=region;
         this.service=service;
@@ -45,12 +51,16 @@ public class Amazon_Callout {
         this.contentType=contentType;
         this.endpoint=new Url('https://' + service + '.' + region + '.amazonaws.com/');
         this.method=HttpMethod.XPOST;
-        this.body=body;        
+        this.body=body;       
     }
     
     //	Send a default request
     public HttpResponse sendRequest(String caseId) {
         this.caseId=caseId;
+        if(hasError)
+        {
+            return new HttpResponse();
+        }
         return sendRequest(new Set<Integer> { 200,201 });
     }    
     
