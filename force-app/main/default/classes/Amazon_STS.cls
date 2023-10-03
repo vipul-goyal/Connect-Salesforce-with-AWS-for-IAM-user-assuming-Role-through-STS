@@ -31,7 +31,9 @@ public without sharing class Amazon_STS {
                 return response.getBody();
             }
             else
-                return '';
+            {
+                return 'Error : '+response.getStatusCode()+'  responseBody : '+response.getBody();
+            }
         }catch(Exception e)
         {
             system.debug('Exception : '+e);
@@ -43,6 +45,11 @@ public without sharing class Amazon_STS {
     {
         String response=makeCallout();
         Map<String,String> responseMap=new Map<String,String>();
+        if(response.startsWithIgnoreCase('Error'))
+        {
+            responseMap.put('error',response);
+            return response;
+        }
         if(String.isNotBlank(response))
         {
             try{
